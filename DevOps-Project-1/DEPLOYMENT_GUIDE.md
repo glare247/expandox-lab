@@ -619,7 +619,7 @@ stringData:
       {
         "auths": {
           "https://index.docker.io/v1/": {
-            "username": "lakunzy",
+            "username": "glare247",
             "password": "dckr_pat_xxxxx",
             "auth": "base64encodedcredentials"
           }
@@ -663,7 +663,7 @@ spec:
                 - name: dockerhub-creds  # Use credentials to pull image
             containers:
                 - name: mini-finance-app
-                  image: lakunzy/mini-finance-app:latest  # Image to run
+                  image: glare247/mini-finance-app:latest  # Image to run
                   imagePullPolicy: IfNotPresent
                   ports:
                       - containerPort: 80
@@ -743,7 +743,7 @@ spec:
 ```bash
 kubectl create secret docker-registry dockerhub-creds \
   --docker-server=https://index.docker.io/v1/ \
-  --docker-username=lakunzy \
+  --docker-username=glare247 \
   --docker-password=dckr_pat_xxxxxxxxxxxxxxxx \
   --namespace=mini-finance-dev
 ```
