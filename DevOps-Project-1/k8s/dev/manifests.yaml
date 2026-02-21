@@ -19,7 +19,7 @@ spec:
                 - name: dockerhub-creds
             containers:
                 - name: mini-finance-app
-                  image: glare247/mini-finance-app:709b91b645958e54ec5962486b478ed5022244e1
+                  image: glare247/mini-finance-app:0a00a345756cb9330587d218abc427ce39b6b00c
                   imagePullPolicy: IfNotPresent
                   ports:
                       - containerPort: 80
