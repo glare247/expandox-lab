@@ -1226,7 +1226,7 @@ Argo CD will detect the difference and revert it (if `selfHeal: true`)
 
 ---
 
-### Q7: How do I add a new environment (staging)?
+### Q7: How do I add a new environment (staging)?!
 
 1. Create manifest file: `DevOps-Project-1/k8s/staging/manifests.yaml`
 2. Copy from dev, modify namespace to `mini-finance-staging`
