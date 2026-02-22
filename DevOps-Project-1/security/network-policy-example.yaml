@@ -1,38 +1,70 @@
 # network-policy-example.yaml
 #
-# This example demonstrates how to restrict network traffic to a backend application.
-# It applies a default-deny policy and then allows ingress traffic only from
-# pods with the label `app: frontend`.
+# Restricts network traffic for mini-finance-app
+# Default deny all ingress, then allow only ArgoCD
 
+# ====== DEV NAMESPACE ======
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: backend-deny-all
-  namespace: default # Should be your application's namespace
+  name: mini-finance-deny-all
+  namespace: mini-finance-dev
 spec:
   podSelector:
     matchLabels:
-      app: backend # Apply this policy to pods with the 'app: backend' label
+      app: mini-finance-app
   policyTypes:
   - Ingress
-
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-frontend-to-backend
-  namespace: default # Should be your application's namespace
+  name: allow-argocd-to-mini-finance
+  namespace: mini-finance-dev
 spec:
   podSelector:
     matchLabels:
-      app: backend
+      app: mini-finance-app
   policyTypes:
   - Ingress
   ingress:
   - from:
-    - podSelector:
+    - namespaceSelector:
         matchLabels:
-          app: frontend # Allow traffic from pods with the 'app: frontend' label
+          kubernetes.io/metadata.name: argocd
     ports:
     - protocol: TCP
-      port: 8080 # The port the backend application is listening on
+      port: 80
+---
+# ====== PROD NAMESPACE ======
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mini-finance-deny-all
+  namespace: mini-finance-prod
+spec:
+  podSelector:
+    matchLabels:
+      app: mini-finance-app
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-argocd-to-mini-finance
+  namespace: mini-finance-prod
+spec:
+  podSelector:
+    matchLabels:
+      app: mini-finance-app
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: argocd
+    ports:
+    - protocol: TCP
+      port: 80
